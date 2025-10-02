@@ -1,72 +1,56 @@
 # 🐼 Panda GC - Leave Management System
 
-A comprehensive leave management system designed to streamline employee leave requests, approvals, and tracking processes.
+A comprehensive leave management system with real-time notifications and chat functionality, built to streamline employee leave requests and approvals.
 
-## 📋 Overview
+## 🌟 Features
 
-Panda GC is a full-stack web application that enables organizations to efficiently manage employee leave requests, approvals, and balance tracking. The system provides role-based access control for employees, managers, and administrators.
+### Core Functionality
+- **Leave Management**: Submit, approve, and track leave requests
+- **Real-time Notifications**: Instant updates using Socket.IO for leave status changes
+- **Real-time Chat**: Built-in chatbot for employee queries and support
+- **User Management**: Role-based access control (Admin, Manager, Employee)
+- **Leave Balance Tracking**: Automatic calculation of available leave days
+- **Dashboard Analytics**: Visual insights into leave patterns and statistics
 
-## ✨ Features
-
-- **Employee Portal**
-  - Submit leave requests with date ranges and reasons
-  - View leave request history and status
-  - Check remaining leave balance
-  - Receive notifications for request updates
-
-- **Manager Dashboard**
-  - Review and approve/reject leave requests
-  - View team leave calendar
-  - Monitor team availability
-  - Generate leave reports
-
-- **Admin Panel**
-  - Manage user accounts and roles
-  - Configure leave types and policies
-  - Set leave quotas and rules
-  - Generate organization-wide reports
-
-- **General Features**
-  - Real-time leave balance calculation
-  - Email notifications
-  - Leave calendar visualization
-  - Conflict detection for overlapping leaves
-  - Responsive design for mobile and desktop
+### Real-time Features
+- Live notification system for leave approvals/rejections
+- Instant chat responses with Socket.IO integration
+- Real-time status updates across the application
 
 ## 🛠️ Technology Stack
 
 ### Frontend
-- **Angular** - Modern web framework for building the user interface
+- **Angular** - Modern web application framework
+- **Socket.IO Client** - Real-time bidirectional communication
 - **TypeScript** - Type-safe development
-- **Bootstrap/CSS** - Responsive styling
+- **Angular Material / Bootstrap** - UI components
 
 ### Backend
 - **Java 8** - Core programming language
 - **Spring Boot** - Application framework
 - **Spring Security** - Authentication and authorization
-- **Spring Data JPA** - Database interaction
-- **Maven** - Dependency management
+- **Socket.IO Java** - Real-time communication
+- **JPA/Hibernate** - ORM for database operations
+- **MySQL** - Relational database
 
-### Database
-- **MySQL** - Relational database management
+## 📋 Prerequisites
 
-## 📦 Prerequisites
+Before you begin, ensure you have the following installed:
 
-Before running this application, ensure you have the following installed:
-
-- **Java Development Kit (JDK) 8** or higher
-- **Node.js** (v14 or higher) and **npm**
+- **Node.js** (v14 or higher) and npm
 - **Angular CLI** (`npm install -g @angular/cli`)
-- **MySQL** (v5.7 or higher)
+- **Java JDK 8** or higher
 - **Maven** (v3.6 or higher)
+- **MySQL** (v5.7 or higher)
+- **Git**
 
 ## 🚀 Installation & Setup
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/nour-derwich/-Panda-GC-Leave-Management-System.git
-cd -Panda-GC-Leave-Management-System
+git clone https://github.com/nour-derwich/Panda-GC-Leave-Management-System.git
+cd Panda-GC-Leave-Management-System
 ```
 
 ### 2. Database Configuration
@@ -77,27 +61,28 @@ Create a MySQL database:
 CREATE DATABASE panda_gc_db;
 ```
 
-Update the `application.properties` file in the backend:
+Update the database configuration in `src/main/resources/application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/panda_gc_db
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 ```
 
 ### 3. Backend Setup
 
-Navigate to the backend directory:
+Navigate to the backend directory and install dependencies:
 
 ```bash
 cd backend
+mvn clean install
 ```
 
-Install dependencies and run:
+Run the Spring Boot application:
 
 ```bash
-mvn clean install
 mvn spring-boot:run
 ```
 
@@ -109,25 +94,20 @@ Navigate to the frontend directory:
 
 ```bash
 cd frontend
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-Update the API endpoint in the environment configuration if needed:
+Update the API endpoint in `src/environments/environment.ts`:
 
 ```typescript
-// src/environments/environment.ts
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api'
+  apiUrl: 'http://localhost:8080/api',
+  socketUrl: 'http://localhost:8080'
 };
 ```
 
-Start the development server:
+Run the Angular development server:
 
 ```bash
 ng serve
@@ -138,46 +118,75 @@ The application will be available at `http://localhost:4200`
 ## 📁 Project Structure
 
 ```
-panda-gc-leave-management/
+Panda-GC-Leave-Management-System/
 ├── backend/
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/
 │   │   │   │   └── com/pandagc/
 │   │   │   │       ├── controller/
-│   │   │   │       ├── model/
-│   │   │   │       ├── repository/
 │   │   │   │       ├── service/
-│   │   │   │       └── config/
+│   │   │   │       ├── repository/
+│   │   │   │       ├── model/
+│   │   │   │       ├── config/
+│   │   │   │       └── socket/
 │   │   │   └── resources/
 │   │   │       └── application.properties
-│   │   └── test/
 │   └── pom.xml
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── components/
-│   │   │   ├── services/
-│   │   │   ├── models/
-│   │   │   └── guards/
-│   │   ├── assets/
-│   │   └── environments/
-│   ├── angular.json
-│   └── package.json
-└── README.md
+└── frontend/
+    ├── src/
+    │   ├── app/
+    │   │   ├── components/
+    │   │   ├── services/
+    │   │   ├── models/
+    │   │   └── guards/
+    │   ├── assets/
+    │   └── environments/
+    └── package.json
 ```
 
-## 🔐 Default Credentials
+## 🔑 Default Credentials
 
-After initial setup, you can use these default credentials:
+After initial setup, you can access the system with:
 
-- **Admin**: admin@pandagc.com / admin123
-- **Manager**: manager@pandagc.com / manager123
-- **Employee**: employee@pandagc.com / employee123
+- **Admin**
+  - Email: `admin@pandagc.com`
+  - Password: `admin123`
 
-**Important**: Change these credentials immediately in production.
+- **Manager**
+  - Email: `manager@pandagc.com`
+  - Password: `manager123`
 
-## 🧪 Running Tests
+- **Employee**
+  - Email: `employee@pandagc.com`
+  - Password: `employee123`
+
+## 📱 API Endpoints
+
+### Authentication
+- `POST /api/auth/login` - User login
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/logout` - User logout
+
+### Leave Management
+- `GET /api/leaves` - Get all leaves
+- `GET /api/leaves/{id}` - Get leave by ID
+- `POST /api/leaves` - Create leave request
+- `PUT /api/leaves/{id}` - Update leave request
+- `DELETE /api/leaves/{id}` - Delete leave request
+- `PUT /api/leaves/{id}/approve` - Approve leave
+- `PUT /api/leaves/{id}/reject` - Reject leave
+
+### Notifications
+- `GET /api/notifications` - Get user notifications
+- `PUT /api/notifications/{id}/read` - Mark as read
+
+### Socket Events
+- `notification` - Real-time notification updates
+- `chat-message` - Chat message events
+- `leave-status-update` - Leave status changes
+
+## 🧪 Testing
 
 ### Backend Tests
 ```bash
@@ -191,17 +200,38 @@ cd frontend
 ng test
 ```
 
-## 📊 API Documentation
+## 🔧 Configuration
 
-Once the backend is running, API documentation is available at:
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
+### Socket.IO Configuration
+
+Backend (`SocketConfig.java`):
+```java
+@Configuration
+public class SocketConfig {
+    @Bean
+    public SocketIOServer socketIOServer() {
+        com.corundumstudio.socketio.Configuration config = 
+            new com.corundumstudio.socketio.Configuration();
+        config.setHostname("localhost");
+        config.setPort(8080);
+        return new SocketIOServer(config);
+    }
+}
+```
+
+Frontend (`socket.service.ts`):
+```typescript
+import { io, Socket } from 'socket.io-client';
+
+this.socket = io('http://localhost:8080');
+```
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
@@ -212,18 +242,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Nour Derwich** - [GitHub Profile](https://github.com/nour-derwich)
-
-## 📧 Contact
-
-For questions or support, please open an issue on GitHub or contact the maintainer.
+- **Nour Derwich** - *Initial work* - [nour-derwich](https://github.com/nour-derwich)
 
 ## 🙏 Acknowledgments
 
-- Spring Boot community for excellent documentation
-- Angular team for the powerful framework
+- Spring Boot documentation
+- Angular documentation
+- Socket.IO documentation
 - All contributors who help improve this project
+
+## 📧 Contact
+
+For questions or support, please contact:
+- Email: contact@pandagc.com
+- GitHub: [@nour-derwich](https://github.com/nour-derwich)
 
 ---
 
-Made with ❤️ by the Panda GC Team
+⭐ If you find this project useful, please consider giving it a star on GitHub!
